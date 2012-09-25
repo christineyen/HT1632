@@ -9,8 +9,8 @@ HT1632LEDMatrix::HT1632LEDMatrix(uint8_t data, uint8_t wr, uint8_t cs1) {
 
   matrices[0] = HT1632(data, wr, cs1);
   matrixNum  = 1;
-  _width = 24 * matrixNum;
-  _height = 16;
+  _width = 16 * matrixNum;
+  _height = 24;
 }
 
 HT1632LEDMatrix::HT1632LEDMatrix(uint8_t data, uint8_t wr, 
@@ -20,8 +20,8 @@ HT1632LEDMatrix::HT1632LEDMatrix(uint8_t data, uint8_t wr,
   matrices[0] = HT1632(data, wr, cs1);
   matrices[1] = HT1632(data, wr, cs2);
   matrixNum  = 2;
-  _width = 24 * matrixNum;
-  _height = 16;
+  _width = 16 * matrixNum;
+  _height = 24;
 }
 
 HT1632LEDMatrix::HT1632LEDMatrix(uint8_t data, uint8_t wr, 
@@ -32,8 +32,8 @@ HT1632LEDMatrix::HT1632LEDMatrix(uint8_t data, uint8_t wr,
   matrices[1] = HT1632(data, wr, cs2);
   matrices[2] = HT1632(data, wr, cs3);
   matrixNum  = 3;
-  _width = 24 * matrixNum;
-  _height = 16;
+  _width = 16 * matrixNum;
+  _height = 24;
 }
 
 HT1632LEDMatrix::HT1632LEDMatrix(uint8_t data, uint8_t wr, 
@@ -46,8 +46,8 @@ HT1632LEDMatrix::HT1632LEDMatrix(uint8_t data, uint8_t wr,
   matrices[2] = HT1632(data, wr, cs3);
   matrices[3] = HT1632(data, wr, cs4);
   matrixNum  = 4;
-  _width = 24 * matrixNum;
-  _height = 16;
+  _width = 16 * matrixNum;
+  _height = 24;
 }
 
 
@@ -64,8 +64,8 @@ void HT1632LEDMatrix::drawPixel(uint8_t x, uint8_t y, uint8_t color) {
 
   uint8_t m;
   // figure out which matrix controller it is
-  m = x / 24;
-  x %= 24;
+  m = x / 16;
+  x %= 16;
 
   uint16_t i;
 
@@ -362,8 +362,8 @@ void HT1632::begin(uint8_t type) {
   sendcommand(type);
   sendcommand(HT1632_PWM_CONTROL | 0xF);
   
-  WIDTH = 24;
-  HEIGHT = 16;
+  WIDTH = 16;
+  HEIGHT = 24;
 }
 
 void HT1632::setBrightness(uint8_t pwm) {
