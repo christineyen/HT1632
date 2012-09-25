@@ -408,9 +408,10 @@ void HT1632::writeScreen() {
   writedata(0, 7);
 
   for (uint16_t i=0; i<(WIDTH*HEIGHT/8); i+=2) {
-    uint16_t d = ledmatrix[i];
+    // value at index i+1 should be bit-shifted higher; value at index i, lower
+    uint16_t d = ledmatrix[i+1];
     d <<= 8;
-    d |= ledmatrix[i+1];
+    d |= ledmatrix[i];
 
     writedata(d, 16);
   }
