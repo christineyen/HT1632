@@ -69,22 +69,7 @@ void HT1632LEDMatrix::drawPixel(uint8_t x, uint8_t y, uint8_t color) {
 
   uint16_t i;
 
-  if (x < 8) {
-    i = 7;
-  } else if (x < 16) {
-    i = 128 + 7;
-  } else {
-    i = 256 + 7;
-  }
-  i -= (x % 8);
-
-  if (y < 8) {
-    y *= 2;
-  } else {
-    y = (y-8) * 2 + 1;
-  } 
-
-  i += y * 8;
+  i = x + (16 * y);
 
   if (color) 
     matrices[m].setPixel(i);
