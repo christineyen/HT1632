@@ -1,6 +1,5 @@
 #include "HT1632.h"
-#include "glcdfont.c"
-
+#include "font_ttuf1.h"
 
 #define swap(a, b) { uint16_t t = a; a = b; b = t; }
 
@@ -268,13 +267,13 @@ size_t HT1632LEDMatrix::write(uint8_t c) {
 void HT1632LEDMatrix::write(uint8_t c) {
 #endif
   if (c == '\n') {
-    cursor_y += textsize*8;
+    cursor_y += textsize*5;
     cursor_x = 0;
   } else if (c == '\r') {
     // skip em
   } else {
     drawChar(cursor_x, cursor_y, c, textcolor, textsize);
-    cursor_x += textsize*6;
+    cursor_x += textsize*4;
   }
 #if ARDUINO >= 100
   return 1;
@@ -285,15 +284,20 @@ void HT1632LEDMatrix::write(uint8_t c) {
 // draw a character
 void HT1632LEDMatrix::drawChar(uint8_t x, uint8_t y, char c, 
 			      uint16_t color, uint8_t size) {
-  for (uint8_t i =0; i<5; i++ ) {
-    uint8_t line = pgm_read_byte(font+(c*5)+i);
-    for (uint8_t j = 0; j<8; j++) {
+  // If we look at font_ttuf1.h, we see that the first character, '!', has an
+  // ASCII value of 33 and maps to indices 3, 4, 5 of the fontSet[] array.
+  // Since we know we want 33 -> 3, 34 (the char '"') -> 6, and 38 ('&') -> 18,
+  // we can calculate the charIndex for any character.
+  uint8_t charIndex = (c - 32) * 3;
+  for (uint8_t i =0; i<3; i++ ) {
+    uint8_t line = pgm_read_byte(fontSet1+charIndex+i);
+    for (uint8_t j = 0; j<5; j++) {
       if (line & 0x1) {
-	if (size == 1) // default size
-	  drawPixel(x+i, y+j, color);
-	else {  // big size
-	  fillRect(x+i*size, y+j*size, size, size, color);
-	} 
+        if (size == 1) // default size
+          drawPixel(x+i, y+j, color);
+        else {  // big size
+          fillRect(x+i*size, y+j*size, size, size, color);
+        }
       }
       line >>= 1;
     }
