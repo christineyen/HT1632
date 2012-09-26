@@ -285,10 +285,10 @@ void HT1632LEDMatrix::write(uint8_t c) {
 void HT1632LEDMatrix::drawChar(uint8_t x, uint8_t y, char c, 
 			      uint16_t color, uint8_t size) {
   // If we look at font_ttuf1.h, we see that the first character, '!', has an
-  // ASCII value of 33 and maps to indices 3, 4, 5 of the fontSet[] array.
-  // Since we know we want 33 -> 3, 34 (the char '"') -> 6, and 38 ('&') -> 18,
+  // ASCII value of 33 and maps to indices 6, 7, 8 of the fontSet[] array.
+  // Since we know we want 33 -> 6, 34 (the char '"') -> 9, and 38 ('&') -> 21,
   // we can calculate the charIndex for any character.
-  uint8_t charIndex = (c - 32) * 3;
+  uint8_t charIndex = (c - 31) * 3;
   for (uint8_t i =0; i<3; i++ ) {
     uint8_t line = pgm_read_byte(fontSet1+charIndex+i);
     for (uint8_t j = 0; j<5; j++) {

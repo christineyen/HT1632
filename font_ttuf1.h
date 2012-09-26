@@ -14,6 +14,7 @@
 #define __TTUF_1_
 //static unsigned char __attribute__ ((progmem))
 const char fontSet1[] PROGMEM = { 66, 3, 5,     // 66 chars, 3x5 font
+        0x00,0x00,0x00, // ' '          32
         0x17,0x00,0x00, // '!'          33
         0x03,0x00,0x03, // '"'          34
         0x1F,0x0A,0x1F, // '#'          35
